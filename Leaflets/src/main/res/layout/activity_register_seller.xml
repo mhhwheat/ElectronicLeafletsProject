@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    android:background="@color/white">
+    
+<LinearLayout 
+    android:id="@+id/line1"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <EditText
+        android:id="@+id/etRegister_seller_Email"
+        android:layout_marginTop="30dp"
+        android:hint="商家邮箱"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/loginedittextbackground"
+        android:inputType="textEmailAddress"/>
+    <EditText
+        android:id="@+id/etRegister_seller_password"
+        android:hint="密码"
+        android:password="true"
+        android:textSize="17sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/loginedittextbackground"/>
+    <EditText
+        android:id="@+id/etRegister_seller_name"
+        android:hint="店名"
+        android:textSize="17sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/loginedittextbackground"/>
+    
+    
+    <Button
+        android:id="@+id/btRegister_seller"
+        android:layout_marginTop="30dp"
+        android:layout_width="fill_parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_height="45dp"
+        android:text="注册"
+        android:textSize="22sp"
+        android:gravity="center"
+        android:background="@drawable/loginbuttonbackground"/>
+   </LinearLayout>
+    
+   <TextView
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@id/line1"
+       android:layout_margin="15dp"
+       android:gravity="center"
+       android:hint="点击注册即表示同意leaflets用户协议"/>
+    <TextView 
+        android:id="@+id/register_seller_reprofile"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:text="使用协议"
+        android:clickable="true"
+        android:gravity="center"
+        android:textColorLink="@color/blueviolet"/>
+
+</RelativeLayout>
