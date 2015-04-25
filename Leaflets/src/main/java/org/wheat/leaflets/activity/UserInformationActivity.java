@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +18,21 @@ import android.widget.TextView;
 
 import org.wheat.leaflets.R;
 import org.wheat.leaflets.basic.ExitApplication;
+import org.wheat.leaflets.data.UserLoginPreference;
+import org.wheat.leaflets.entity.PhotoParameters;
+import org.wheat.leaflets.entity.json.UserMsgJson;
+import org.wheat.leaflets.loader.HttpLoaderMethods;
+import org.wheat.leaflets.loader.HttpUploadMethods;
+import org.wheat.leaflets.loader.ImageLoader;
 
 /**
  * Created by Administrator on 2015/4/22.
  */
 public class UserInformationActivity extends Activity
 {
+    private UserLoginPreference mPreference;
     private LayoutInflater mInflater;
+    private ImageLoader mImageLoader;
 
     private ImageView ivAvatar;
     private TextView tvUserSex;
@@ -31,7 +40,7 @@ public class UserInformationActivity extends Activity
     private EditText etPersonalIntroduction;
 
     private ImageView ivTitleBack;
-    private TextView tvTitleSava;
+    private TextView tvTitleSave;
 
     private PopupWindow pwSelectSex;
 
@@ -44,7 +53,9 @@ public class UserInformationActivity extends Activity
         setContentView(R.layout.activity_user_information);
         getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_user_information_title);
 
+        mPreference=UserLoginPreference.getInstance(getApplicationContext());
         mInflater=(LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mImageLoader=ImageLoader.getInstance(this);
 
         ivAvatar=(ImageView)findViewById(R.id.user_info_user_avatar);
         tvUserSex=(TextView)findViewById(R.id.user_infomation_sex);
@@ -52,10 +63,21 @@ public class UserInformationActivity extends Activity
         etPersonalIntroduction=(EditText)findViewById(R.id.user_information_personal_introduction);
 
         ivTitleBack=(ImageView)findViewById(R.id.user_information_title_back_img);
-        tvTitleSava=(TextView)findViewById(R.id.user_information_title_save);
+        tvTitleSave=(TextView)findViewById(R.id.user_information_title_save);
+
+        initial();
 
         ExitApplication.getInstance().addActivity(UserInformationActivity.this);
 
+    }
+
+    private void initial()
+    {
+        mImageLoader.addTask(new PhotoParameters(mPreference.getUserPreference().getUserAvatar(),80,80,"user_portrait"), ivAvatar);
+        etUserNickName.setHint(mPreference.getUserPreference().getNickName());
+        etPersonalIntroduction.setText(mPreference.getUserPreference().getPersonalIntroduction());
+        initialPopupWindow();
+        initialListener();
     }
 
     private void initialListener()
@@ -81,7 +103,7 @@ public class UserInformationActivity extends Activity
             }
         });
 
-        tvTitleSava.setOnClickListener(new View.OnClickListener() {
+        tvTitleSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -114,11 +136,53 @@ public class UserInformationActivity extends Activity
 
     private class UpdateUserInformationTask extends AsyncTask<Void,Void,Void>
     {
+        private UserMsgJson userMsg;
+
+        public  UpdateUserInformationTask(UserMsgJson userMsg)
+        {
+            this.userMsg=userMsg;
+        }
 
         @Override
         protected Void doInBackground(Void... params)
         {
+            int returnCode= HttpUploadMethods.setUserData(userMsg);
+            if(returnCode!=200)
+            {
+                Log.d("UserInformationActivity",String.valueOf(returnCode));
+            }
             return null;
         }
     }
+
+//    private class GetUserInformationTask extends AsyncTask<Void,Void,UserMsgJson>
+//    {
+//        private String userEmail;
+//
+//        public GetUserInformationTask(String userEmail)
+//        {
+//            this.userEmail=userEmail;
+//        }
+//
+//        @Override
+//        protected UserMsgJson doInBackground(Void... params) {
+//            UserMsgJson userMsg=null;
+//            try {
+//                userMsg = HttpLoaderMethods.getUserData(this.userEmail);
+//            } catch (Throwable throwable) {
+//                throwable.printStackTrace();
+//            }
+//            return userMsg;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(UserMsgJson userMsgJson) {
+//            super.onPostExecute(userMsgJson);
+//
+//            if(userMsgJson!=null&&userMsgJson.getCode()==1000)
+//            {
+//
+//            }
+//        }
+//    }
 }

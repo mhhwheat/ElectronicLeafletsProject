@@ -29,13 +29,16 @@ public class SellerMsgFields
 	private String sellerName;
 	
 	@SerializedName("lat")
-	private int lat;
+	private double lat;
 	
 	@SerializedName("lng")
-	private int lng;
+	private double lng;
 	
 	@SerializedName("email")
 	private String email;
+
+	@SerializedName("seller_address")
+	private String sellerAddress;
 
 	public String getUserName() {
 		return userName;
@@ -69,19 +72,19 @@ public class SellerMsgFields
 		this.sellerName = sellerName;
 	}
 
-	public int getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLat(int lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
-	public int getLng() {
+	public double getLng() {
 		return lng;
 	}
 
-	public void setLng(int lng) {
+	public void setLng(double lng) {
 		this.lng = lng;
 	}
 
@@ -92,7 +95,13 @@ public class SellerMsgFields
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
+	public String getSellerAddress() {
+		return sellerAddress;
+	}
+
+	public void setSellerAddress(String sellerAddress) {
+		this.sellerAddress = sellerAddress;
+	}
 	
 }

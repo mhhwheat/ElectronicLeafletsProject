@@ -275,7 +275,7 @@ public class SellerMessageActivity extends Activity
 			LeafletsJson json=null;
 			try
 			{
-				json=HttpLoaderMethods.getSellerleaflets(userName);
+				json=HttpLoaderMethods.getSellerLeaflets(userName);
 			}catch(Throwable e)
 			{
 				e.printStackTrace();

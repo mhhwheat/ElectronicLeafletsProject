@@ -360,7 +360,7 @@ public class FragmentFollow extends Fragment implements OnScrollListener
 			LeafletsJson json=null;
 			try
 			{
-				json=HttpLoaderMethods.getNeighborPage(offsetStart, offsetEnd, userName,sortingType);
+				json=HttpLoaderMethods.getLeafletData(offsetStart, offsetEnd, userName);
 			}catch(Throwable e)
 			{
 				e.printStackTrace();

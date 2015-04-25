@@ -38,14 +38,15 @@ public class UserLoginPreference
     public static final int USER_LOGIN=1;
     public static final int SELLER_LOGIN=2;
     public static final int NO_USER_LOGIN=0;
-    
+
+
     private static final String IS_FIRST_RUN="isFirstRun";//是否是第一次启动程序
-    
     private static final String USER="user";
     private static final String SELLER="seller";
-    
     //("user","seller","")
     private static final String LOGIN_STATE="login_state";
+	private static final String LOCATION_LAT="lat";//设备的lat坐标
+	private static final String LOCATION_LNG="lng";//设备的lng坐标
     
     private UserPreference mUser=null;
     private SellerPreference mSeller=null;
@@ -60,62 +61,7 @@ public class UserLoginPreference
         packageName = context.getPackageName() + "_user_login_preferences";  
         sharedPreference = context.getSharedPreferences(  
                 packageName, Context.MODE_PRIVATE);  
-    } 
-    
-//    public void setUserName(String userName)
-//    {
-//    	Editor editor = sharedPreference.edit(); 
-//    	editor.putString(USER_NAME, userName);
-//    	editor.commit();
-//    }
-//    
-//    
-//    public String getUserName()
-//    {
-//    	String userName=sharedPreference.getString(USER_NAME, "");
-//    	return userName;
-//    }
-//    
-//    public void setPassword(String password)
-//    {
-//    	Editor editor=sharedPreference.edit();
-//    	editor.putString(PASSWORD, password);
-//    	editor.commit();
-//    }
-//    
-//    public String getPassword()
-//    {
-//    	return sharedPreference.getString(PASSWORD, "");
-//    }
-    
-//    public void setIsSavePassword(boolean isSavePassword)
-//    {
-//    	Editor editor=sharedPreference.edit();
-//    	editor.putBoolean(IS_SAVE_PWD, isSavePassword);
-//    	editor.commit();
-//    }
-    
-//    public boolean getIsSavePassword()
-//    {
-//    	return sharedPreference.getBoolean(IS_SAVE_PWD, false);
-//    }
-    
-//    public void setUserAvatar(String userAvatar)
-//    {
-//    	Editor editor = sharedPreference.edit(); 
-//    	editor.putString(USER_AVATAR, userAvatar);
-//    	editor.commit();
-//    }
-//    
-//    public String getUserAvatar()
-//    {
-//    	String avatarPath= sharedPreference.getString(USER_AVATAR, "");
-//    	if(avatarPath==null||avatarPath.equals(""))
-//    	{
-//    		return null;
-//    	}
-//    	return avatarPath;
-//    }
+    }
     
     public void setLoginState(int state)
     {
@@ -224,5 +170,29 @@ public class UserLoginPreference
     	}
     	return mSeller;
     }
+
+	public void setLocationLat(double lat)
+	{
+		Editor editor=sharedPreference.edit();
+		editor.putString(this.LOCATION_LAT,String.valueOf(lat));
+		editor.commit();
+	}
+
+	public double getLocationLat()
+	{
+		return Double.parseDouble(sharedPreference.getString(LOCATION_LAT,"0"));
+	}
+
+	public void setLocationLng(double lng)
+	{
+		Editor editor=sharedPreference.edit();
+		editor.putString(this.LOCATION_LNG,String.valueOf(lng));
+		editor.commit();
+	}
+
+	public double getLocationLng()
+	{
+		return Double.parseDouble(sharedPreference.getString(LOCATION_LNG,"0"));
+	}
     
 }

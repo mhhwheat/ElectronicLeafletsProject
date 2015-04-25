@@ -23,7 +23,7 @@ public class PhotoParameters
 	 * @param maxNumOfPixels	图片的总像素
 	 * @param fixWidth			是否保持图片的高宽比例，如果为true，imageViewWidth不能小于0，如果fixWidth为false，imageViewWidth参数无效
 	 * @param imageViewWidth	图片所在ImageView的宽度
-	 * @param isPrimary   		求情的图片类型（seller_logo,primary,secondary）
+	 * @param photoType   		求情的图片类型（seller_logo,primary,secondary）
 	 */
 	public PhotoParameters(String url,int minSideLength,int maxNumOfPixels,boolean fixWidth,int imageViewWidth,String photoType)
 	{

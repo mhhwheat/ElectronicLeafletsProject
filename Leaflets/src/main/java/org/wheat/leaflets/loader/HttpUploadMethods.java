@@ -18,8 +18,11 @@ import org.apache.http.entity.FileEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
 import org.wheat.leaflets.entity.ConstantValue;
+import org.wheat.leaflets.entity.CoordinatePostFields;
 import org.wheat.leaflets.entity.json.CommentPostJson;
+import org.wheat.leaflets.entity.json.CoordinatePostJson;
 import org.wheat.leaflets.entity.json.PraisePostJson;
+import org.wheat.leaflets.entity.json.UserMsgJson;
 import org.wheat.leaflets.httptools.HttpConnectTools;
 import org.wheat.leaflets.httptools.JsonTools;
 
@@ -47,7 +50,7 @@ public class HttpUploadMethods
 	
 	public static int removePraiseRecord(int leaflet_id,String userName) throws Exception
 	{
-		int returnCode=HttpConnectTools.getReturnCode(ConstantValue.HttpRoot+"remove_praise"+"?leaflet_id="+leaflet_id+"&username="+userName, null, null);
+		int returnCode=HttpConnectTools.getReturnCode(ConstantValue.HttpRoot + "remove_praise" + "?leaflet_id=" + leaflet_id + "&username=" + userName, null, null);
 		return returnCode;
 	}
 	
@@ -91,10 +94,29 @@ public class HttpUploadMethods
 		int returnCode=HttpConnectTools.getReturnCode(ConstantValue.HttpRoot+"remove_favourite?"+"username="+userName+"&leaflet_id="+leaflet_id, null, null);
 		return returnCode;
 	}
-	
+
 	public static int setFavourite(String userName,int leaflet_id) throws Exception
 	{
 		int returnCode=HttpConnectTools.getReturnCode(ConstantValue.HttpRoot+"set_favourite?"+"username="+userName+"&leaflet_id="+leaflet_id, null, null);
+		return returnCode;
+	}
+
+	public static int setUserData(UserMsgJson userMsg)
+	{
+		int returnCode=HttpConnectTools.postJsonReturnCode(ConstantValue.HttpRoot + "set_user_data", userMsg, null);
+		return returnCode;
+	}
+
+	public static  int updateUserCoordinate(String userName,double lat,double lng)
+	{
+		CoordinatePostFields fields=new CoordinatePostFields();
+		fields.setUserName(userName);
+		fields.setLng(lng);
+		fields.setLat(lat);
+		CoordinatePostJson coordinatePost=new CoordinatePostJson();
+		coordinatePost.setData(fields);
+
+		int returnCode=HttpConnectTools.postJsonReturnCode(ConstantValue.HttpRoot+"update_user_coordinate",coordinatePost,null);
 		return returnCode;
 	}
 }

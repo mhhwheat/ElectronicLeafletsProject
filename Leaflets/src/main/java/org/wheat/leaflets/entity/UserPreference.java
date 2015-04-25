@@ -21,6 +21,10 @@ public class UserPreference implements Serializable
 	private String userEmail;
 	private String nickName;
 	private String userAvatar;
+	private  String personalIntroduction;
+	private double lat;
+	private double lng;
+	private String phoneNumber;
 	
 	
 	public String getUserEmail() {
@@ -41,6 +45,36 @@ public class UserPreference implements Serializable
 	public void setUserAvatar(String userAvatar) {
 		this.userAvatar = userAvatar;
 	}
-	
-	
+
+	public String getPersonalIntroduction() {
+		return personalIntroduction;
+	}
+
+	public void setPersonalIntroduction(String personalIntroduction) {
+		this.personalIntroduction = personalIntroduction;
+	}
+
+	public double getLat() {
+		return lat;
+	}
+
+	public void setLat(double lat) {
+		this.lat = lat;
+	}
+
+	public double getLng() {
+		return lng;
+	}
+
+	public void setLng(double lng) {
+		this.lng = lng;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 }

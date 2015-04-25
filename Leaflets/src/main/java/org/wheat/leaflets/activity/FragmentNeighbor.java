@@ -357,14 +357,12 @@ public class FragmentNeighbor extends Fragment implements OnScrollListener
 		private int offsetStart;
 		private int offsetEnd;
 		private String userName;
-		private String sortingType;
 		
 		public LoadMoreTask(int offsetStart,int offsetEnd,String userName,String sortingType)
 		{
 			super();
 			this.offsetStart=offsetStart;
 			this.offsetEnd=offsetEnd;
-			this.sortingType=sortingType;
 			this.userName=userName;
 		}
 		
@@ -373,7 +371,7 @@ public class FragmentNeighbor extends Fragment implements OnScrollListener
 			LeafletsJson json=null;
 			try
 			{
-				json=HttpLoaderMethods.getNeighborPage(offsetStart, offsetEnd, userName,sortingType);
+				json=HttpLoaderMethods.getLeafletData(offsetStart, offsetEnd, userName);
 			}catch(Throwable e)
 			{
 				e.printStackTrace();

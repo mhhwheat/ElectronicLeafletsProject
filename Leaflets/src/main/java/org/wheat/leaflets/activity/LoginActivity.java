@@ -119,14 +119,11 @@ public class LoginActivity extends Activity
 					if(result.getMsg().equals(ConstantValue.USER_LOGIN_SUCESS))
 					{
 						new GetUserMsgTask(strEmail).execute();
-						setResult(1,null);
-						LoginActivity.this.finish();
+
 					}
 					else if(result.getMsg().equals(ConstantValue.SELLER_LOGIN_SUCESS))
 					{
 						new GetSellerMsgTask(strEmail).execute();
-						setResult(2,null);
-						LoginActivity.this.finish();
 					}
 				}
 				if(result.getCode()==1021)
@@ -172,7 +169,17 @@ public class LoginActivity extends Activity
 				preference.setNickName(result.getData().getDataFields().getNickName());
 				preference.setUserAvatar(result.getData().getDataFields().getUserAvatar());
 				preference.setUserEmail(result.getData().getDataFields().getUserName());
+				preference.setLat(result.getData().getDataFields().getLat());
+				preference.setLng(result.getData().getDataFields().getLng());
+				preference.setPersonalIntroduction(result.getData().getDataFields().getPersonalIntroduction());
+				preference.setPhoneNumber(result.getData().getDataFields().getPhoneNumber());
 				sharePreference.setUserPreference(preference);
+				setResult(1,null);
+				LoginActivity.this.finish();
+			}
+			else
+			{
+				Log.d("LoginActivity","µÇÂ½Ê§°Ü");
 			}
 		}
 	}
@@ -213,10 +220,17 @@ public class LoginActivity extends Activity
 				preference.setSellerEmail(result.getData().getUserName());
 				preference.setLat(result.getData().getLat());
 				preference.setLng(result.getData().getLng());
-//				preference.setSellerAddress(result.getData().get);
+				preference.setSellerAddress(result.getData().getSellerAddress());
 				preference.setSellerPhoneNumber(result.getData().getPhoneNubmer());
 				
 				sharePreference.setSellerPreference(preference);
+
+				setResult(2,null);
+				LoginActivity.this.finish();
+			}
+			else
+			{
+				Log.d("LoginActivity","µÇÂ½Ê§°Ü");
 			}
 		}
 	}

@@ -66,30 +66,38 @@ public class HttpLoaderMethods
 	 */
 	public static LeafletsJson flushLeafletData(String username,int distance,String sortingWay,String leafletType) throws Throwable
 	{
-		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"flush_leaflet_data?username="+username+"&rule_distance="+distance+"&rule_time="+sortingWay+"&rule_type="+leafletType, null);
+		String json=HttpConnectTools.get(ConstantValue.HttpRoot + "flush_leaflet_data?username=" + username + "&rule_distance=" + distance + "&rule_time=" + sortingWay + "&rule_type=" + leafletType, null);
 		if(json==null)
 			return null;
 //		Log.d("HttpLoaderMethod", "LeafletJson :"+json);
 		return JsonTools.fromJson(new String(json.getBytes("8859_1"),"UTF-8"), LeafletsJson.class);
 	}
-	
-	/**
-	 * 为NeighborFragment加载更多数据时使用的Api，请求数据表中第offset_begin到第offset_end条数据
-	 * @param offset_begin
-	 * @param offset_end
-	 * @param username
-	 * @param order_rule   (oder_rule的三个值"published":按发布时间排序,"start":按即将开始的时间排序,"end":按即将结束时间排序)
-	 * @return
-	 * @throws Throwable
-	 */
-	public static LeafletsJson getNeighborPage(int offset_begin,int offset_end,String username,String order_rule) throws Throwable
+
+	public static LeafletsJson getLeafletData(int offset_begin,int offset_end,String username) throws Throwable
 	{
-		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"get_leaflet_data?username="+username+"&offset_begin="+offset_begin+"&offset_end="+offset_end+"&order_rule="+order_rule, null);
+		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"get_leaflet_data?username="+username+"&offset_begin="+offset_begin+"&offset_end="+offset_end, null);
 		if(json==null)
 			return null;
-		
 		return JsonTools.fromJson(new String(json.getBytes("8859_1"),"UTF-8"), LeafletsJson.class);
 	}
+	
+//	/**
+//	 * 为NeighborFragment加载更多数据时使用的Api，请求数据表中第offset_begin到第offset_end条数据
+//	 * @param offset_begin
+//	 * @param offset_end
+//	 * @param username
+//	 * @param order_rule   (oder_rule的三个值"published":按发布时间排序,"start":按即将开始的时间排序,"end":按即将结束时间排序)
+//	 * @return
+//	 * @throws Throwable
+//	 */
+//	public static LeafletsJson getNeighborPage(int offset_begin,int offset_end,String username,String order_rule) throws Throwable
+//	{
+//		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"get_leaflet_data?username="+username+"&offset_begin="+offset_begin+"&offset_end="+offset_end+"&order_rule="+order_rule, null);
+//		if(json==null)
+//			return null;
+//
+//		return JsonTools.fromJson(new String(json.getBytes("8859_1"),"UTF-8"), LeafletsJson.class);
+//	}
 	
 	public static CommentGetJson getCommentContent(String userName,int leafletId) throws Throwable
 	{
@@ -122,6 +130,7 @@ public class HttpLoaderMethods
 		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"get_user_data?username="+userName, null);
 		if(json==null)
 			return null;
+		Log.d("HttpLoaderMethod","UserMessageJson="+json);
 		return JsonTools.fromJson(new String(json.getBytes("8859_1"),"UTF-8"), UserMsgJson.class);
 	}
 	
@@ -143,21 +152,18 @@ public class HttpLoaderMethods
 		return JsonTools.fromJson(new String(json.getBytes("8859_1"),"UTF-8"), LeafletsJson.class);
 	}
 	
-	public static LeafletsJson getSellerleaflets(String userName) throws Throwable
+	public static LeafletsJson getSellerLeaflets(String userName) throws Throwable
 	{
 
 		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"get_seller_leaflet?"+"username="+userName, null);
-		
 		if(json==null)
 			return null;
-		
 		return JsonTools.fromJson(new String(json.getBytes("8859_1"),"UTF-8"), LeafletsJson.class);
 	}
 	
 	public static LeafletsJson flushMyCollection(String userName) throws Throwable
 	{
 		String json=HttpConnectTools.get(ConstantValue.HttpRoot+"flush_favourite?"+"username="+userName, null);
-
 		if(json==null)
 			return null;
 		Log.d("HttpLoaderMethod", json);

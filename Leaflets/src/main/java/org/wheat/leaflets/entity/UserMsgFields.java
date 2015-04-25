@@ -23,19 +23,23 @@ public class UserMsgFields
 	private String phoneNumber;
 	
 	@SerializedName("lat")
-	private int lat;
+	private double lat;
 	
 	@SerializedName("portrait")
 	private String userAvatar;
 	
 	@SerializedName("lng")
-	private int lng;
+	private double lng;
 	
 	@SerializedName("nickname")
 	private String nickName;
 	
 	@SerializedName("email")
 	private String email;
+
+	@SerializedName("profile")
+	private  String personalIntroduction;
+
 
 	public String getUserName() {
 		return userName;
@@ -53,11 +57,11 @@ public class UserMsgFields
 		this.phoneNumber = phoneNumber;
 	}
 
-	public int getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public void setLat(int lat) {
+	public void setLat(double lat) {
 		this.lat = lat;
 	}
 
@@ -69,11 +73,11 @@ public class UserMsgFields
 		this.userAvatar = userAvatar;
 	}
 
-	public int getLng() {
+	public double getLng() {
 		return lng;
 	}
 
-	public void setLng(int lng) {
+	public void setLng(double lng) {
 		this.lng = lng;
 	}
 
@@ -92,6 +96,12 @@ public class UserMsgFields
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
+
+	public String getPersonalIntroduction() {
+		return personalIntroduction;
+	}
+
+	public void setPersonalIntroduction(String personalIntroduction) {
+		this.personalIntroduction = personalIntroduction;
+	}
 }

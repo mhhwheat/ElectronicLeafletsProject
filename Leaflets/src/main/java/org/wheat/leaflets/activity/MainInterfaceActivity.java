@@ -8,11 +8,10 @@ package org.wheat.leaflets.activity;
 
 
 
-import java.util.ArrayList;
-
 import org.wheat.leaflets.R;
 import org.wheat.leaflets.activity.FragmentMainInterface.TitleAvatarListener;
 import org.wheat.leaflets.basic.ExitApplication;
+import org.wheat.leaflets.data.UserLoginPreference;
 import org.wheat.leaflets.entity.MyLocation;
 
 import com.amap.api.location.AMapLocation;
@@ -41,6 +40,7 @@ import android.widget.Toast;
  */
 public class MainInterfaceActivity extends FragmentActivity implements AMapLocationListener,TitleAvatarListener
 {
+    private UserLoginPreference preference;
     private LayoutInflater mInflater;
 
 //	private PopupWindow popupMenu;
@@ -63,14 +63,12 @@ public class MainInterfaceActivity extends FragmentActivity implements AMapLocat
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-//		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);  
-//		setContentView(R.layout.activity_main_interface);
-//		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_main_interface_title);
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main_interface);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        preference=UserLoginPreference.getInstance(getApplicationContext());
         mInflater=(LayoutInflater)this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         initialSlidingMenu();
@@ -109,25 +107,6 @@ public class MainInterfaceActivity extends FragmentActivity implements AMapLocat
     }
 
 
-
-
-
-//	private void initPopupMenu()
-//	{
-//		View menuView=mInflater.inflate(R.layout.main_interface_popup_menu, null,false);
-//		popupMenu=new PopupWindow(menuView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, true);
-//		
-//		// 设置允许在外点击消失
-//		popupMenu.setOutsideTouchable(true);
-//		// 使其聚集 ，要想监听菜单里控件的事件就必须要调用此方法
-//		popupMenu.setFocusable(true);
-//		
-//		//如果需要PopupWindow响应返回键，那么必须给PopupWindow设置一个背景才行
-//		ColorDrawable dw = new ColorDrawable(0X00000000);
-//		popupMenu.setBackgroundDrawable(dw);	
-//	}
-
-
     /**
      * 切换Fragemtn,替换布局为R.id.replacing_fragment
      * @param from	切换前的Fragment
@@ -161,24 +140,6 @@ public class MainInterfaceActivity extends FragmentActivity implements AMapLocat
         }
     }
 
-
-
-//	@Override
-//	public void onItemClick(int item) {
-//		switch(item)
-//		{
-//		case 0:
-//			switchFragment(mCurrentFragment, mMainInterfaceFragment, R.id.replacing_fragment);
-//			mCurrentFragment=mMainInterfaceFragment;
-//			menu.toggle();
-//			break;
-//		case 1:
-//			switchFragment(mCurrentFragment, mFollowFragment, R.id.replacing_fragment);
-//			mCurrentFragment=mFollowFragment;
-//			menu.toggle();
-//			break;
-//		}
-//	}
 
 
 
@@ -220,10 +181,11 @@ public class MainInterfaceActivity extends FragmentActivity implements AMapLocat
     public void onLocationChanged(AMapLocation amapLocation) {
         if (amapLocation!=null&&amapLocation.getAMapException().getErrorCode() == 0) {
             // 定位成功回调信息，设置相关消息
-
             this.myLocation.setLat(amapLocation.getLatitude());
             this.myLocation.setLng(amapLocation.getLongitude());
             this.myLocation.setLocationMessage(amapLocation.getAddress());
+            preference.setLocationLat(amapLocation.getLatitude());
+            preference.setLocationLng(amapLocation.getLongitude());
             Toast.makeText(this, amapLocation.getAddress(),Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(this, "定位失败，请检查你的GPS和网络", Toast.LENGTH_LONG).show();

@@ -172,7 +172,7 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 					isLoadingMore=true;
 					pbFooterLoading.setVisibility(View.VISIBLE);
 					tvFooterText.setText(R.string.list_footer_loading);
-					new LoadMoreTask(mListData.size()+1,mListData.size()+PAGE_LENGTH,testUserName,"published").execute();
+					loadMoreData();
 				}
 			}
 		});
@@ -372,7 +372,7 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 					isLoadingMore=true;
 					pbFooterLoading.setVisibility(View.VISIBLE);
 					tvFooterText.setText(R.string.list_footer_loading);
-					new LoadMoreTask(mListData.size()+1,mListData.size()+PAGE_LENGTH,testUserName,"published").execute();
+					loadMoreData();
 				}
 			}
 		});
@@ -630,17 +630,83 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 	private void refreshData()
 	{
 		UserLoginPreference preference=UserLoginPreference.getInstance(getActivity());
+		String userName="";
 		if(preference.getLoginState()==UserLoginPreference.NO_USER_LOGIN)
 		{
-			new UpdateDataTask(DeivceInformation.getAndroidId(getActivity()),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+			userName=DeivceInformation.getAndroidId(getActivity());
 		}
 		else if(preference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
 		{
-			new UpdateDataTask(preference.getSellerPreference().getSellerEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+			userName=preference.getSellerPreference().getSellerEmail();
 		}
 		else if(preference.getLoginState()==UserLoginPreference.USER_LOGIN)
 		{
-			new UpdateDataTask(preference.getUserPreference().getUserEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+			userName=preference.getUserPreference().getUserEmail();
+		}
+		new UpdateCoordinateTask(userName,preference.getLocationLat(),preference.getLocationLng()).execute();
+
+	}
+
+	private void loadMoreData()
+	{
+		UserLoginPreference preference=UserLoginPreference.getInstance(getActivity());
+		String userName="";
+		if(preference.getLoginState()==UserLoginPreference.NO_USER_LOGIN)
+		{
+			userName=DeivceInformation.getAndroidId(getActivity());
+		}
+		else if(preference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
+		{
+			userName=preference.getSellerPreference().getSellerEmail();
+		}
+		else if(preference.getLoginState()==UserLoginPreference.USER_LOGIN)
+		{
+			userName=preference.getUserPreference().getUserEmail();
+		}
+		new LoadMoreTask(mListData.size()+1,mListData.size()+PAGE_LENGTH,userName).execute();
+	}
+
+	private class UpdateCoordinateTask extends AsyncTask<Void,Void,Integer>
+	{
+		private String userName;
+		private double lat;
+		private double lng;
+
+		public UpdateCoordinateTask(String userName,double lat, double lng)
+		{
+			this.userName=userName;
+			this.lat=lat;
+			this.lng=lng;
+		}
+
+		@Override
+		protected Integer doInBackground(Void... params) {
+			return HttpUploadMethods.updateUserCoordinate(userName,lat,lng);
+		}
+
+		@Override
+		protected void onPostExecute(Integer integer) {
+			super.onPostExecute(integer);
+			if(integer==200)
+			{
+				UserLoginPreference preference=UserLoginPreference.getInstance(getActivity());
+				if(preference.getLoginState()==UserLoginPreference.NO_USER_LOGIN)
+				{
+					new UpdateDataTask(DeivceInformation.getAndroidId(getActivity()),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+				}
+				else if(preference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
+				{
+					new UpdateDataTask(preference.getSellerPreference().getSellerEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+				}
+				else if(preference.getLoginState()==UserLoginPreference.USER_LOGIN)
+				{
+					new UpdateDataTask(preference.getUserPreference().getUserEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+				}
+			}
+			else
+			{
+				Log.d("FragmentMainInterface","¸üÐÂ×ø±êÊ§°Ü");
+			}
 		}
 	}
 	
@@ -710,14 +776,12 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 		private int offsetStart;
 		private int offsetEnd;
 		private String userName;
-		private String sortingType;
 		
-		public LoadMoreTask(int offsetStart,int offsetEnd,String userName,String sortingType)
+		public LoadMoreTask(int offsetStart,int offsetEnd,String userName)
 		{
 			super();
 			this.offsetStart=offsetStart;
 			this.offsetEnd=offsetEnd;
-			this.sortingType=sortingType;
 			this.userName=userName;
 		}
 		
@@ -726,7 +790,7 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 			LeafletsJson json=null;
 			try
 			{
-				json=HttpLoaderMethods.getNeighborPage(offsetStart, offsetEnd, userName,sortingType);
+				json=HttpLoaderMethods.getLeafletData(offsetStart, offsetEnd, userName);
 			}catch(Throwable e)
 			{
 				e.printStackTrace();

@@ -81,38 +81,40 @@ public class FragmentSlidingMenu extends Fragment
 	
 	
 	
-	@Override
-	public void onStart() {
-		super.onStart();
-		
-		if(sharePreference.getLoginState()==UserLoginPreference.USER_LOGIN)
-		{
-			tvName.setText(sharePreference.getUserPreference().getNickName());
-			mImageLoader.addTask(new PhotoParameters(sharePreference.getUserPreference().getUserAvatar(), 60, 60*60, "user_portrait"), civAvatarAndLogo);
-		}
-		if(sharePreference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
-		{
-			tvName.setText(sharePreference.getSellerPreference().getSellerName());
-			mImageLoader.addTask(new PhotoParameters(sharePreference.getSellerPreference().getSellerLogoPath(), 60, 60*60, "seller_logo"), civAvatarAndLogo);
-		}
-	}
+//	@Override
+//	public void onResume() {
+//		super.onResume();
+//
+//		if(sharePreference.getLoginState()==UserLoginPreference.USER_LOGIN)
+//		{
+//			tvName.setText(sharePreference.getUserPreference().getNickName());
+//			mImageLoader.addTask(new PhotoParameters(sharePreference.getUserPreference().getUserAvatar(), 60, 60*60, "user_portrait"), civAvatarAndLogo);
+//		}
+//		if(sharePreference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
+//		{
+//			tvName.setText(sharePreference.getSellerPreference().getSellerName());
+//			mImageLoader.addTask(new PhotoParameters(sharePreference.getSellerPreference().getSellerLogoPath(), 60, 60*60, "seller_logo"), civAvatarAndLogo);
+//		}
+//	}
+
+
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-//		if(resultCode==1)
-//		{
-//			
-//			tvName.setText(sharePreference.getUserPreference().getNickName());
-//			mImageLoader.addTask(new PhotoParameters(sharePreference.getUserPreference().getUserAvatar(), 60, 60*60, "user_portrait"), civAvatarAndLogo);
-//		}
-//		if(resultCode==2)
-//		{
-//			
-//			tvName.setText(sharePreference.getSellerPreference().getSellerName());
-//			mImageLoader.addTask(new PhotoParameters(sharePreference.getSellerPreference().getSellerLogoPath(), 60, 60*60, "seller_logo"), civAvatarAndLogo);
-//		}
+		if(resultCode==1)
+		{
+
+			tvName.setText(sharePreference.getUserPreference().getNickName());
+			mImageLoader.addTask(new PhotoParameters(sharePreference.getUserPreference().getUserAvatar(), 60, 60*60, "user_portrait"), civAvatarAndLogo);
+		}
+		if(resultCode==2)
+		{
+
+			tvName.setText(sharePreference.getSellerPreference().getSellerName());
+			mImageLoader.addTask(new PhotoParameters(sharePreference.getSellerPreference().getSellerLogoPath(), 60, 60*60, "seller_logo"), civAvatarAndLogo);
+		}
 	}
 
 	private void initialDialog()
