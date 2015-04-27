@@ -6,6 +6,7 @@ import org.wheat.leaflets.entity.json.RegisterSellerMsgJson;
 import org.wheat.leaflets.loader.LoginAndRegister;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +31,10 @@ public class RegisterSellerActivity extends Activity
 	private EditText etRegisterSellerName;
 	private Button btRegister;
 	private ImageView ivTitleBack;
+	private Button btMarkAddress;
+
+	private double sellerLat=Double.MAX_VALUE;
+	private double sellerLng=Double.MAX_VALUE;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +48,38 @@ public class RegisterSellerActivity extends Activity
 		etRegisterPassword=(EditText)findViewById(R.id.etRegister_seller_password);
 		etRegisterSellerName=(EditText)findViewById(R.id.etRegister_seller_name);
 		btRegister=(Button)findViewById(R.id.btRegister_seller);
+		btMarkAddress=(Button)findViewById(R.id.btRegister_seller_mark_address);
 		
 		btRegister.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				new RegisterSellerTask(etRegisterEmail.getText().toString(), etRegisterPassword.getText().toString(),etRegisterSellerName.getText().toString()).execute();
+				if(checkItem())
+					new RegisterSellerTask(etRegisterEmail.getText().toString(), etRegisterPassword.getText().toString(),etRegisterSellerName.getText().toString()).execute();
+			}
+		});
+
+		btMarkAddress.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent=new Intent(RegisterSellerActivity.this,MapLocationActivity.class);
+				startActivityForResult(intent,1);
 			}
 		});
 
 		initialTitle();
 		
 		ExitApplication.getInstance().addActivity(this);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if(requestCode==1&&resultCode==1&&data!=null)
+		{
+			sellerLat=data.getDoubleExtra("lat",Double.MAX_VALUE);
+			sellerLng=data.getDoubleExtra("lng",Double.MAX_VALUE);
+		}
 	}
 
 	private void initialTitle()
@@ -66,6 +91,36 @@ public class RegisterSellerActivity extends Activity
 				RegisterSellerActivity.this.finish();
 			}
 		});
+	}
+
+	private boolean checkItem()
+	{
+		if(etRegisterEmail.getText().toString().trim().equals(""))
+		{
+			Toast.makeText(RegisterSellerActivity.this,"邮箱不能为空",Toast.LENGTH_LONG).show();
+			return false;
+		}
+
+		if(etRegisterPassword.getText().toString().trim().equals(""))
+		{
+			Toast.makeText(RegisterSellerActivity.this,"密码不能为空",Toast.LENGTH_LONG).show();
+			return false;
+		}
+
+		if(etRegisterSellerName.getText().toString().trim().equals(""))
+		{
+			Toast.makeText(RegisterSellerActivity.this,"店名不能为空",Toast.LENGTH_LONG).show();
+			return false;
+		}
+
+		if(sellerLat==Double.MAX_VALUE||sellerLng==Double.MAX_VALUE)
+		{
+			Toast.makeText(RegisterSellerActivity.this,"必须标记商店的地址",Toast.LENGTH_LONG).show();
+			return false;
+		}
+
+		return true;
+
 	}
 	
 	private class RegisterSellerTask extends AsyncTask<Void, Void, RegisterSellerMsgJson>
@@ -85,7 +140,7 @@ public class RegisterSellerActivity extends Activity
 		protected RegisterSellerMsgJson doInBackground(Void... params) {
 			RegisterSellerMsgJson registerSellerMsgJson=null;
 			try {
-				registerSellerMsgJson=LoginAndRegister.synRegisterSeller(strEmail, strPassword,strSellerName);
+				registerSellerMsgJson=LoginAndRegister.synRegisterSeller(strEmail, strPassword,strSellerName,sellerLat,sellerLng);
 			} catch (Throwable e) {
 				e.printStackTrace();
 			}

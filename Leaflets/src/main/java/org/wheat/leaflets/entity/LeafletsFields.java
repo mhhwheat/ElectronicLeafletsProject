@@ -73,6 +73,12 @@ public class LeafletsFields
 	 */
 	@SerializedName("lng")
 	private double lng;
+
+	@SerializedName("seller_lat")
+	private double sellerLat;
+
+	@SerializedName("seller_lng")
+	private double sellerLng;
 	
 	/**
 	 * 该传单的活动地点与用户之间的距离
@@ -205,6 +211,22 @@ public class LeafletsFields
 
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	public double getSellerLat() {
+		return sellerLat;
+	}
+
+	public void setSellerLat(double sellerLat) {
+		this.sellerLat = sellerLat;
+	}
+
+	public double getSellerLng() {
+		return sellerLng;
+	}
+
+	public void setSellerLng(double sellerLng) {
+		this.sellerLng = sellerLng;
 	}
 
 	public double getDistance() {

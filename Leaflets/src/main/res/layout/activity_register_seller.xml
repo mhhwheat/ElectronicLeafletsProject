@@ -28,7 +28,7 @@
         android:password="true"
         android:textSize="17sp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="45dp"
@@ -47,7 +47,19 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/loginedittextbackground"/>
-    
+
+    <Button
+        android:id="@+id/btRegister_seller_mark_address"
+        android:text="标记商店地址"
+        android:textSize="17sp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/loginedittextbackground"/>
     
     <Button
         android:id="@+id/btRegister_seller"

@@ -681,7 +681,18 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 
 		@Override
 		protected Integer doInBackground(Void... params) {
-			return HttpUploadMethods.updateUserCoordinate(userName,lat,lng);
+
+			int state=UserLoginPreference.getInstance(getActivity().getApplicationContext()).getLoginState();
+			if(state==UserLoginPreference.NO_USER_LOGIN)
+				return HttpUploadMethods.updateUserCoordinate(userName,lat,lng,"anonymous");
+			else if(state==UserLoginPreference.USER_LOGIN)
+			{
+				return HttpUploadMethods.updateUserCoordinate(userName,lat,lng,"user");
+			}
+			else
+			{
+				return HttpUploadMethods.updateUserCoordinate(userName,lat,lng,"seller");
+			}
 		}
 
 		@Override
@@ -689,18 +700,18 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 			super.onPostExecute(integer);
 			if(integer==200)
 			{
-				UserLoginPreference preference=UserLoginPreference.getInstance(getActivity());
+				UserLoginPreference preference=UserLoginPreference.getInstance(getActivity().getApplicationContext());
 				if(preference.getLoginState()==UserLoginPreference.NO_USER_LOGIN)
 				{
-					new UpdateDataTask(DeivceInformation.getAndroidId(getActivity()),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+					new UpdateDataTask(DeivceInformation.getAndroidId(getActivity()),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex],"anonymous").execute();
 				}
 				else if(preference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
 				{
-					new UpdateDataTask(preference.getSellerPreference().getSellerEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+					new UpdateDataTask(preference.getSellerPreference().getSellerEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex],"seller").execute();
 				}
 				else if(preference.getLoginState()==UserLoginPreference.USER_LOGIN)
 				{
-					new UpdateDataTask(preference.getUserPreference().getUserEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex]).execute();
+					new UpdateDataTask(preference.getUserPreference().getUserEmail(),strSortingWayMap[sortingWayIndex],intDistanceMap[distanceIndex],strLeafletClassMap[leafletClassIndex],"user").execute();
 				}
 			}
 			else
@@ -723,13 +734,15 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 		private String sortingType;
 		private int distance;
 		private String leafletClass;
+		private String userType;
 		
-		public UpdateDataTask(String userName,String sortingType,int distance,String leafletClass)
+		public UpdateDataTask(String userName,String sortingType,int distance,String leafletClass,String userType)
 		{
 			this.userName=userName;
 			this.sortingType=sortingType;
 			this.distance=distance;
 			this.leafletClass=leafletClass;
+			this.userType=userType;
 		}
 
 		@Override
@@ -737,7 +750,7 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 			LeafletsJson json=null;
 			try
 			{
-				json=HttpLoaderMethods.flushLeafletData(userName,distance,sortingType,leafletClass);
+				json=HttpLoaderMethods.flushLeafletData(userName,distance,sortingType,leafletClass,userType);
 			}catch(Throwable e)
 			{
 				e.printStackTrace();

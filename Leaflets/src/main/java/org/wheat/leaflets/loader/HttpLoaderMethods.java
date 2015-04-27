@@ -61,12 +61,13 @@ public class HttpLoaderMethods
 	 * @param distance 按距离进行筛选
 	 * @param sortingWay 按不同的条件进行排序
 	 * @param leafletType 按leaflet的类型进项筛选
+	 * @param userType 用户的类型（user，seller，anonymous）
 	 * @return
 	 * @throws Throwable
 	 */
-	public static LeafletsJson flushLeafletData(String username,int distance,String sortingWay,String leafletType) throws Throwable
+	public static LeafletsJson flushLeafletData(String username,int distance,String sortingWay,String leafletType,String userType) throws Throwable
 	{
-		String json=HttpConnectTools.get(ConstantValue.HttpRoot + "flush_leaflet_data?username=" + username + "&rule_distance=" + distance + "&rule_time=" + sortingWay + "&rule_type=" + leafletType, null);
+		String json=HttpConnectTools.get(ConstantValue.HttpRoot + "flush_leaflet_data?username=" + username + "&rule_distance=" + distance + "&rule_time=" + sortingWay + "&rule_type=" + leafletType+"&user_type="+userType, null);
 		if(json==null)
 			return null;
 //		Log.d("HttpLoaderMethod", "LeafletJson :"+json);

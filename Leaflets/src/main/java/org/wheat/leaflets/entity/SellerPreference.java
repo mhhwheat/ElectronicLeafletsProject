@@ -24,6 +24,8 @@ public class SellerPreference implements Serializable
 	private String sellerPhoneNumber;
 	private double lat;
 	private double lng;
+	private double sellerLat;
+	private double sellerLng;
 	private String sellerAddress;
 	
 	
@@ -70,6 +72,22 @@ public class SellerPreference implements Serializable
 
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	public double getSellerLng() {
+		return sellerLng;
+	}
+
+	public void setSellerLng(double sellerLng) {
+		this.sellerLng = sellerLng;
+	}
+
+	public double getSellerLat() {
+		return sellerLat;
+	}
+
+	public void setSellerLat(double sellerLat) {
+		this.sellerLat = sellerLat;
 	}
 
 	public String getSellerAddress() {

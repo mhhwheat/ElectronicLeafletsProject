@@ -33,6 +33,12 @@ public class SellerMsgFields
 	
 	@SerializedName("lng")
 	private double lng;
+
+	@SerializedName("seller_lat")
+	private double sellerLat;
+
+	@SerializedName("seller_lng")
+	private double sellerLng;
 	
 	@SerializedName("email")
 	private String email;
@@ -86,6 +92,22 @@ public class SellerMsgFields
 
 	public void setLng(double lng) {
 		this.lng = lng;
+	}
+
+	public double getSellerLat() {
+		return sellerLat;
+	}
+
+	public void setSellerLat(double sellerLat) {
+		this.sellerLat = sellerLat;
+	}
+
+	public double getSellerLng() {
+		return sellerLng;
+	}
+
+	public void setSellerLng(double sellerLng) {
+		this.sellerLng = sellerLng;
 	}
 
 	public String getEmail() {

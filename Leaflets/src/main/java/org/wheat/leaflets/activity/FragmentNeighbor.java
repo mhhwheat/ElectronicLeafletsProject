@@ -318,7 +318,7 @@ public class FragmentNeighbor extends Fragment implements OnScrollListener
 			LeafletsJson json=null;
 			try
 			{
-				json=HttpLoaderMethods.flushLeafletData("abc@qq.com",10000,"published_time","shipin");
+				json=HttpLoaderMethods.flushLeafletData("abc@qq.com",10000,"published_time","shipin","user");
 			}catch(Throwable e)
 			{
 				e.printStackTrace();

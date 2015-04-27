@@ -22,6 +22,7 @@ import org.wheat.leaflets.entity.CoordinatePostFields;
 import org.wheat.leaflets.entity.json.CommentPostJson;
 import org.wheat.leaflets.entity.json.CoordinatePostJson;
 import org.wheat.leaflets.entity.json.PraisePostJson;
+import org.wheat.leaflets.entity.json.SellerUpdateMsgJson;
 import org.wheat.leaflets.entity.json.UserMsgJson;
 import org.wheat.leaflets.entity.json.UserUpdateMsgJson;
 import org.wheat.leaflets.httptools.HttpConnectTools;
@@ -106,7 +107,21 @@ public class HttpUploadMethods
 		return returnCode;
 	}
 
-	public static  int updateUserCoordinate(String userName,double lat,double lng)
+	public static int setSellerData(SellerUpdateMsgJson sellerMsg)
+	{
+		int returnCode=HttpConnectTools.postJsonReturnCode(ConstantValue.HttpRoot+"set_seller_data",sellerMsg,null);
+		return returnCode;
+	}
+
+	/**
+	 *
+	 * @param userName 用户的邮箱
+	 * @param lat 用户目前的坐标
+	 * @param lng 用户目前的坐标
+	 * @param  userType 用户类型 （user，seller，anonymous）
+	 * @return
+	 */
+	public static  int updateUserCoordinate(String userName,double lat,double lng,String userType)
 	{
 		CoordinatePostFields fields=new CoordinatePostFields();
 		fields.setUserName(userName);
