@@ -1,18 +1,24 @@
 package org.wheat.leaflets.activity;
 import org.wheat.leaflets.R;
 import org.wheat.leaflets.basic.ExitApplication;
+import org.wheat.leaflets.data.UserLoginPreference;
+import org.wheat.leaflets.entity.UserPreference;
 import org.wheat.leaflets.entity.json.RegisterMsgJson;
 import org.wheat.leaflets.entity.json.UserNameJson;
 import org.wheat.leaflets.loader.LoginAndRegister;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -29,11 +35,15 @@ public class RegisterActivity extends Activity
 	private EditText etRegisterPassword;
 	private EditText etRegisterNickname;
 	private Button btRegister;
+	private ImageView ivTitleBack;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_register);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_register_title);
 		
 		etRegisterEmail=(EditText)findViewById(R.id.etRegister_Email);
 		etRegisterPassword=(EditText)findViewById(R.id.etRegister_password);
@@ -58,8 +68,21 @@ public class RegisterActivity extends Activity
 				}
 			}
 		});
+
+		initialTitle();
 		
 		ExitApplication.getInstance().addActivity(this);
+	}
+
+	private void initialTitle()
+	{
+		ivTitleBack=(ImageView)findViewById(R.id.register_title_back_img);
+		ivTitleBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RegisterActivity.this.finish();
+			}
+		});
 	}
 	
 	/**
@@ -100,16 +123,16 @@ public class RegisterActivity extends Activity
 			{
 				if(result.getCode()==1000)
 				{
-					Toast toast=Toast.makeText(RegisterActivity.this, "用户名合法", Toast.LENGTH_LONG);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
+//					Toast toast=Toast.makeText(RegisterActivity.this, "用户名合法", Toast.LENGTH_LONG);
+//					toast.setGravity(Gravity.CENTER, 0, 0);
+//					toast.show();
 				}
 				if(result.getCode()==1024)
 				{
-					etRegisterEmail.setText("用户已经存在");
-//					Toast toast=Toast.makeText(LoginActivity.this, "用户已经存在", Toast.LENGTH_LONG);
-//					toast.setGravity(Gravity.CENTER, 0, 0);
-//					toast.show();
+//					etRegisterEmail.setText("用户已经存在");
+					Toast toast=Toast.makeText(RegisterActivity.this, "用户已经存在", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
 				}
 			}
 		}
@@ -146,7 +169,6 @@ public class RegisterActivity extends Activity
 			{
 				Log.d("RegisterActivity", "RegisterMsgJson is null!");
 			}
-				
 			else
 			{
 				if(result.getCode()==1000)
@@ -154,6 +176,14 @@ public class RegisterActivity extends Activity
 					Toast toast=Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
+					UserLoginPreference mPreference=UserLoginPreference.getInstance(getApplicationContext());
+					UserPreference userPreference=mPreference.getUserPreference();
+					mPreference.setLoginState(UserLoginPreference.USER_LOGIN);
+					userPreference.setUserEmail(this.strEmail);
+					userPreference.setNickName(this.strNickname);
+					mPreference.setUserPreference(userPreference);
+					Intent intent=new Intent(RegisterActivity.this,MainInterfaceActivity.class);
+					startActivity(intent);
 				}
 			}
 		}

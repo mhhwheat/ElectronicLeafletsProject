@@ -11,8 +11,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /** 
@@ -27,11 +29,15 @@ public class RegisterSellerActivity extends Activity
 	private EditText etRegisterPassword;
 	private EditText etRegisterSellerName;
 	private Button btRegister;
+	private ImageView ivTitleBack;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_register_seller);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_register_seller_title);
 		
 		etRegisterEmail=(EditText)findViewById(R.id.etRegister_seller_Email);
 		etRegisterPassword=(EditText)findViewById(R.id.etRegister_seller_password);
@@ -45,8 +51,21 @@ public class RegisterSellerActivity extends Activity
 				new RegisterSellerTask(etRegisterEmail.getText().toString(), etRegisterPassword.getText().toString(),etRegisterSellerName.getText().toString()).execute();
 			}
 		});
+
+		initialTitle();
 		
 		ExitApplication.getInstance().addActivity(this);
+	}
+
+	private void initialTitle()
+	{
+		ivTitleBack=(ImageView)findViewById(R.id.register_seller_title_back_img);
+		ivTitleBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				RegisterSellerActivity.this.finish();
+			}
+		});
 	}
 	
 	private class RegisterSellerTask extends AsyncTask<Void, Void, RegisterSellerMsgJson>

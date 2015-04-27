@@ -159,7 +159,7 @@ public class UserLoginPreference
     			{
     				mSeller=(SellerPreference)obj;
     			}
-    			
+
     		}catch(StreamCorruptedException e)
     		{
     			e.printStackTrace();
@@ -170,6 +170,18 @@ public class UserLoginPreference
     	}
     	return mSeller;
     }
+
+	public void commitUserPreference()
+	{
+		if(mUser!=null)
+			this.setUserPreference(this.mUser);
+	}
+
+	public void commitSellerPreference()
+	{
+		if(mSeller!=null)
+			this.setSellerPreference(this.mSeller);
+	}
 
 	public void setLocationLat(double lat)
 	{

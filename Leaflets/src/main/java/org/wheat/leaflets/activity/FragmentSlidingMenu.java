@@ -17,6 +17,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,44 +79,53 @@ public class FragmentSlidingMenu extends Fragment
 		
 		return view;
 	}
-	
-	
-	
+
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.d("System out", "Fragment->onResume");
+		if(sharePreference.getLoginState()==UserLoginPreference.USER_LOGIN)
+		{
+			tvName.setText(sharePreference.getUserPreference().getNickName());
+			String userAvatar=sharePreference.getUserPreference().getUserAvatar();
+			if(userAvatar==null||userAvatar.equals(""))
+			{
+				civAvatarAndLogo.setImageResource(R.drawable.avatar_default);
+			}
+			else
+				mImageLoader.addTask(new PhotoParameters(userAvatar, 60, 60*60, "user_portrait"), civAvatarAndLogo);
+		}
+		if(sharePreference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
+		{
+			tvName.setText(sharePreference.getSellerPreference().getSellerName());
+			String sellerLogo=sharePreference.getSellerPreference().getSellerLogoPath();
+			if(sellerLogo==null||sellerLogo.equals(""))
+			{
+				civAvatarAndLogo.setImageResource(R.drawable.avatar_default);
+			}
+			else
+				mImageLoader.addTask(new PhotoParameters(sellerLogo, 60, 60*60, "seller_logo"), civAvatarAndLogo);
+		}
+	}
+
 //	@Override
-//	public void onResume() {
-//		super.onResume();
-//
-//		if(sharePreference.getLoginState()==UserLoginPreference.USER_LOGIN)
+//	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//		// TODO Auto-generated method stub
+//		super.onActivityResult(requestCode, resultCode, data);
+//		if(resultCode==1)
 //		{
+//
 //			tvName.setText(sharePreference.getUserPreference().getNickName());
 //			mImageLoader.addTask(new PhotoParameters(sharePreference.getUserPreference().getUserAvatar(), 60, 60*60, "user_portrait"), civAvatarAndLogo);
 //		}
-//		if(sharePreference.getLoginState()==UserLoginPreference.SELLER_LOGIN)
+//		if(resultCode==2)
 //		{
+//
 //			tvName.setText(sharePreference.getSellerPreference().getSellerName());
 //			mImageLoader.addTask(new PhotoParameters(sharePreference.getSellerPreference().getSellerLogoPath(), 60, 60*60, "seller_logo"), civAvatarAndLogo);
 //		}
 //	}
-
-
-
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
-		super.onActivityResult(requestCode, resultCode, data);
-		if(resultCode==1)
-		{
-
-			tvName.setText(sharePreference.getUserPreference().getNickName());
-			mImageLoader.addTask(new PhotoParameters(sharePreference.getUserPreference().getUserAvatar(), 60, 60*60, "user_portrait"), civAvatarAndLogo);
-		}
-		if(resultCode==2)
-		{
-
-			tvName.setText(sharePreference.getSellerPreference().getSellerName());
-			mImageLoader.addTask(new PhotoParameters(sharePreference.getSellerPreference().getSellerLogoPath(), 60, 60*60, "seller_logo"), civAvatarAndLogo);
-		}
-	}
 
 	private void initialDialog()
 	{
@@ -167,6 +177,11 @@ public class FragmentSlidingMenu extends Fragment
 				if(sharePreference.getLoginState()==UserLoginPreference.NO_USER_LOGIN)
 				{
 					Intent intent=new Intent(getActivity(),LoginActivity.class);
+					startActivity(intent);
+				}
+				if(sharePreference.getLoginState()==UserLoginPreference.USER_LOGIN)
+				{
+					Intent intent=new Intent(getActivity(),UserInformationActivity.class);
 					startActivity(intent);
 				}
 			}

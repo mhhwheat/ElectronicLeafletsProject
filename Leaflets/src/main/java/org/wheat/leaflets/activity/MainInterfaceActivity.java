@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Window;
@@ -88,9 +89,11 @@ public class MainInterfaceActivity extends FragmentActivity implements AMapLocat
         ExitApplication.getInstance().addActivity(this);
     }
 
-
-
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d("System out", "Activity->onResume");
+    }
 
     private void initialSlidingMenu()
     {

@@ -40,6 +40,9 @@ public class UserMsgFields
 	@SerializedName("profile")
 	private  String personalIntroduction;
 
+	@SerializedName("sex")
+	private String sex;
+
 
 	public String getUserName() {
 		return userName;
@@ -103,5 +106,13 @@ public class UserMsgFields
 
 	public void setPersonalIntroduction(String personalIntroduction) {
 		this.personalIntroduction = personalIntroduction;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 }

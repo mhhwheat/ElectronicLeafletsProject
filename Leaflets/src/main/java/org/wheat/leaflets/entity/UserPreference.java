@@ -25,6 +25,7 @@ public class UserPreference implements Serializable
 	private double lat;
 	private double lng;
 	private String phoneNumber;
+	private String sex;
 	
 	
 	public String getUserEmail() {
@@ -76,5 +77,13 @@ public class UserPreference implements Serializable
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
 	}
 }

@@ -23,6 +23,7 @@ import org.wheat.leaflets.entity.json.CommentPostJson;
 import org.wheat.leaflets.entity.json.CoordinatePostJson;
 import org.wheat.leaflets.entity.json.PraisePostJson;
 import org.wheat.leaflets.entity.json.UserMsgJson;
+import org.wheat.leaflets.entity.json.UserUpdateMsgJson;
 import org.wheat.leaflets.httptools.HttpConnectTools;
 import org.wheat.leaflets.httptools.JsonTools;
 
@@ -59,7 +60,7 @@ public class HttpUploadMethods
 	 * 
 	 * @param photo   上传到服务器的图片文件
 	 * @param photoName  生成的图片id，用来保存在服务器端
-	 * @param photoType 上传的图片的类型
+	 * @param photoType 上传的图片的类型(primary，secondary，seller_logo，portrait)
 	 * @return  int 自定义成功与否的状态码
 	 * @throws Exception
 	 */
@@ -67,11 +68,9 @@ public class HttpUploadMethods
 	public static int uploadPhoto(File photo,String photoName,String photoType) throws Exception {
 		System.out.println("in post photo method");
 		HttpClient httpclient = new DefaultHttpClient();
-		httpclient.getParams().setParameter(
-				CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
+		httpclient.getParams().setParameter(CoreProtocolPNames.PROTOCOL_VERSION, HttpVersion.HTTP_1_1);
 
-		HttpPost httppost = new HttpPost(ConstantValue.HttpRoot+"upload_image"
-						+ "?photo_type=" + photoType+"&photo_name="+photoName);
+		HttpPost httppost = new HttpPost(ConstantValue.HttpRoot+"upload_image" + "?photo_type=" + photoType+"&photo_name="+photoName);
 
 		FileEntity reqEntity = new FileEntity(photo, "binary/octet-stream");
 
@@ -101,7 +100,7 @@ public class HttpUploadMethods
 		return returnCode;
 	}
 
-	public static int setUserData(UserMsgJson userMsg)
+	public static int setUserData(UserUpdateMsgJson userMsg)
 	{
 		int returnCode=HttpConnectTools.postJsonReturnCode(ConstantValue.HttpRoot + "set_user_data", userMsg, null);
 		return returnCode;

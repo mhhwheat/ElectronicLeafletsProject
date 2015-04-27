@@ -3,6 +3,9 @@
 
     <color name="main_tab_textColor_selected">#FF1C94EA</color>
     <color name="main_tab_textColor">#FFDCE0DF</color>
+
+    <color name="full_transparent">#00000000</color>
+    <color name="half_transparent">#aa000000</color>
     
     <color name="white">#FFFFFF</color>
  <!-- 白色 -->

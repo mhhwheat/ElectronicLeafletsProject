@@ -21,8 +21,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,6 +41,7 @@ public class LoginActivity extends Activity
 	private EditText etPassword;
 	private Button btLogin;
 	private TextView tvRegister;
+	private ImageView ivTitleBack;
 	
 	private UserLoginPreference sharePreference;
 
@@ -46,7 +49,11 @@ public class LoginActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
+
+		requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
 		setContentView(R.layout.activity_login);
+		getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.activity_login_title);
+
 		etEmail=(EditText)findViewById(R.id.login_user_id);
 		etPassword=(EditText)findViewById(R.id.login_pwd);
 		btLogin=(Button)findViewById(R.id.btLogin);
@@ -72,8 +79,21 @@ public class LoginActivity extends Activity
 				startActivity(intent);
 			}
 		});
+
+		initialTitle();
 		
 		ExitApplication.getInstance().addActivity(this);
+	}
+
+	private void initialTitle()
+	{
+		ivTitleBack=(ImageView)findViewById(R.id.login_title_back_img);
+		ivTitleBack.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				LoginActivity.this.finish();
+			}
+		});
 	}
 	
 	
@@ -173,6 +193,7 @@ public class LoginActivity extends Activity
 				preference.setLng(result.getData().getDataFields().getLng());
 				preference.setPersonalIntroduction(result.getData().getDataFields().getPersonalIntroduction());
 				preference.setPhoneNumber(result.getData().getDataFields().getPhoneNumber());
+				preference.setSex(result.getData().getDataFields().getSex());
 				sharePreference.setUserPreference(preference);
 				setResult(1,null);
 				LoginActivity.this.finish();
@@ -222,7 +243,6 @@ public class LoginActivity extends Activity
 				preference.setLng(result.getData().getLng());
 				preference.setSellerAddress(result.getData().getSellerAddress());
 				preference.setSellerPhoneNumber(result.getData().getPhoneNubmer());
-				
 				sharePreference.setSellerPreference(preference);
 
 				setResult(2,null);
