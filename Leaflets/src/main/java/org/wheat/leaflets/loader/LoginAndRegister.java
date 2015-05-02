@@ -65,14 +65,8 @@ public class LoginAndRegister
 		return JsonTools.fromJson(json, RegisterMsgJson.class);
 	}
 	
-	public static RegisterSellerMsgJson synRegisterSeller(String strEmail,String strPassword,String strSellerName,double sellerLat,double sellerLng) throws Throwable
+	public static RegisterSellerMsgJson synRegisterSeller(RegisterSellerMsg registerSellerMsg) throws Throwable
 	{
-		RegisterSellerMsg registerSellerMsg=new RegisterSellerMsg();
-		registerSellerMsg.setEmail(strEmail);
-		registerSellerMsg.setPassword(strPassword);
-		registerSellerMsg.setSellerName(strSellerName);
-		registerSellerMsg.setSellerLat(sellerLat);
-		registerSellerMsg.setSellerLng(sellerLng);
 		
 		RegisterSellerMsgJson registerSellerMsgJson=new RegisterSellerMsgJson();
 		registerSellerMsgJson.setData(registerSellerMsg);

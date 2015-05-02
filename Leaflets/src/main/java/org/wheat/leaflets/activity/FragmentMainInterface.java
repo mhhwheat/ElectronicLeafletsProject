@@ -400,8 +400,8 @@ public class FragmentMainInterface extends Fragment implements OnScrollListener
 				bundle.putString("leaflet_type", data.getDataFields().getLeafletType());
 				bundle.putInt("comment_times", data.getDataFields().getCommentTimes());
 				bundle.putString("seller_logo_path", data.getDataFields().getSellerLogoPath());
-				bundle.putDouble("lat", data.getDataFields().getLat());
-				bundle.putDouble("lng", data.getDataFields().getLng());
+				bundle.putDouble("lat", data.getDataFields().getSellerLat());
+				bundle.putDouble("lng", data.getDataFields().getSellerLng());
 				bundle.putDouble("distance", data.getDataFields().getDistance());
 				bundle.putInt("is_praise", data.getDataFields().isPraise());
 				bundle.putString("seller_address", data.getDataFields().getSellerAddress());

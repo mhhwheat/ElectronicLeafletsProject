@@ -61,18 +61,6 @@ public class LeafletsFields
 	
 	@SerializedName("seller_logo_name")
 	private String sellerLogoPath;
-	
-	/**
-	 * зјБъ
-	 */
-	@SerializedName("lat")
-	private double lat;
-	
-	/**
-	 * зјБъ
-	 */
-	@SerializedName("lng")
-	private double lng;
 
 	@SerializedName("seller_lat")
 	private double sellerLat;
@@ -196,22 +184,7 @@ public class LeafletsFields
 	public void setSellerLogoPath(String sellerLogoPath) {
 		this.sellerLogoPath = sellerLogoPath;
 	}
-	
-	public double getLat() {
-		return lat;
-	}
 
-	public void setLat(double lat) {
-		this.lat = lat;
-	}
-
-	public double getLng() {
-		return lng;
-	}
-
-	public void setLng(double lng) {
-		this.lng = lng;
-	}
 
 	public double getSellerLat() {
 		return sellerLat;

@@ -37,4 +37,21 @@
         <item >gouwu</item>
         <item >yule</item>
     </string-array>
+
+    <string-array name="spinner_leaflet_class">
+        <item >请选择传单的类型</item>
+        <item >美食</item>
+        <item >电影</item>
+        <item >购物</item>
+        <item >休闲娱乐</item>
+    </string-array>
+
+    <string-array name="spinner_leaflet_class_reflect">
+        <item >null</item>
+        <item >shipin</item>
+        <item >dianyin</item>
+        <item >gouwu</item>
+        <item >yule</item>
+    </string-array>
+
 </resources>

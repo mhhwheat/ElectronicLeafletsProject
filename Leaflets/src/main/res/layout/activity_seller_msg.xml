@@ -4,17 +4,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical" 
     android:background="@color/gray">
-	<ListView
-        android:id="@+id/activity_seller_list"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/listview_background_color"
-        android:cacheColorHint="@android:color/background_light"
-        android:divider="@null"
-        android:fadingEdge="none"
-        android:fastScrollEnabled="false"
-		android:scrollbars="none"
-        android:scrollingCache="true"
-        android:stackFromBottom="false"
-        android:transcriptMode="normal"/>
+    <org.wheat.leaflets.widget.QuickReturnRelativeLayout
+        android:id="@+id/seller_msg_quick_return_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/activity_seller_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/listview_background_color"
+            android:cacheColorHint="@android:color/background_light"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:scrollbars="none"
+            android:scrollingCache="true"
+            android:stackFromBottom="false"
+            android:transcriptMode="normal"/>
+    </org.wheat.leaflets.widget.QuickReturnRelativeLayout>
 </LinearLayout>

@@ -21,6 +21,7 @@ import org.wheat.leaflets.entity.ConstantValue;
 import org.wheat.leaflets.entity.CoordinatePostFields;
 import org.wheat.leaflets.entity.json.CommentPostJson;
 import org.wheat.leaflets.entity.json.CoordinatePostJson;
+import org.wheat.leaflets.entity.json.LeafletUploadJson;
 import org.wheat.leaflets.entity.json.PraisePostJson;
 import org.wheat.leaflets.entity.json.SellerUpdateMsgJson;
 import org.wheat.leaflets.entity.json.UserMsgJson;
@@ -131,6 +132,12 @@ public class HttpUploadMethods
 		coordinatePost.setData(fields);
 
 		int returnCode=HttpConnectTools.postJsonReturnCode(ConstantValue.HttpRoot+"update_user_coordinate",coordinatePost,null);
+		return returnCode;
+	}
+
+	public static int uploadLeafletMsg(LeafletUploadJson leafletUpload)
+	{
+		int returnCode=HttpConnectTools.postJsonReturnCode(ConstantValue.HttpRoot+"upload_leaflet_data",leafletUpload,null);
 		return returnCode;
 	}
 }

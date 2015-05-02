@@ -36,6 +36,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.provider.MediaStore.MediaColumns;
 import android.util.DisplayMetrics;
+import android.util.Log;
+
+import org.wheat.leaflets.httptools.BitmapTools;
 
 /**
  * 图片操作工具包
@@ -133,6 +136,34 @@ public class ImageUtils {
         Uri contentUri = Uri.fromFile(file);
         mediaScanIntent.setData(contentUri);
         ctx.sendBroadcast(mediaScanIntent);
+    }
+
+    public static Bitmap getAdapterWidthBitmap(File file,int widthPixels)
+    {
+        Bitmap bitmap=null;
+        BitmapFactory.Options opts=new BitmapFactory.Options();
+        opts.inJustDecodeBounds=true;
+
+        try {
+            InputStream is = new FileInputStream(file);
+            byte[] buffer= BitmapTools.getBytes(is);
+            BitmapFactory.decodeByteArray(buffer, 0, buffer.length, opts);
+            //BitmapFactory.decodeStream(is,null,opts);
+            Log.w("HttpLoader", "图片的高为" + opts.outHeight);
+            Log.w("HttpLoader", "图片的宽为" + opts.outWidth);
+            opts.inSampleSize=(opts.outWidth/widthPixels)>1?(opts.outWidth/widthPixels):1;
+            Log.w("HttpLoader", "inSampleSize为"+opts.inSampleSize);
+            opts.inJustDecodeBounds=false;
+            bitmap=BitmapFactory.decodeByteArray(buffer, 0, buffer.length, opts);
+            is.close();
+        }catch (FileNotFoundException e)
+        {
+            return null;
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        return bitmap;
     }
 
     /**

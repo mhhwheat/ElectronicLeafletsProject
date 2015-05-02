@@ -19,6 +19,7 @@ import org.wheat.leaflets.entity.json.SellerMsgJson;
 import org.wheat.leaflets.loader.HttpLoaderMethods;
 import org.wheat.leaflets.loader.HttpUploadMethods;
 import org.wheat.leaflets.loader.ImageLoader;
+import org.wheat.leaflets.widget.QuickReturnRelativeLayout;
 
 import android.app.Activity;
 import android.content.Context;
@@ -33,8 +34,10 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /** 
@@ -57,7 +60,6 @@ public class SellerMessageActivity extends Activity
 	private DisplayMetrics metric;
 	
 	private String userName="abc@qq.com";
-	private String userNickName="wheat";
 	private String sellerEmail="youcome@qq.com";
 	
 	private ListView mListView;
@@ -67,12 +69,17 @@ public class SellerMessageActivity extends Activity
 	private ImageLoader mImageLoader;
 	
 	private ImageView ivTitleBack;
+	private ImageView ivTitleEdit;
 	
 	private View mHeaderView;
 	private TextView tvSellerName;
 	private TextView tvSellerAddress;
 	private TextView tvSellerTel;
 	private TextView tvSellerEmail;
+
+	private QuickReturnRelativeLayout rlQuickReturnLayout;
+	private View mQuickReturnView;
+	Button btAddLeaflet;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,19 +105,38 @@ public class SellerMessageActivity extends Activity
 		mListView.addHeaderView(mHeaderView);
 		
 		ivTitleBack=(ImageView)findViewById(R.id.seller_msg_title_back_img);
+		ivTitleEdit=(ImageView)findViewById(R.id.seller_msg_title_edit);
 		initialTitleBackListener();
+
+		rlQuickReturnLayout=(QuickReturnRelativeLayout)findViewById(R.id.seller_msg_quick_return_layout);
+		mQuickReturnView=mInflater.inflate(R.layout.activity_seller_msg_quick_return_view,null,false);
+		btAddLeaflet=(Button)mQuickReturnView.findViewById(R.id.seller_msg_add_leaflet);
+
 		
 		taskPool=new HashMap<String, ImageView>();
-		
-		new UpdateDataTask(sellerEmail).execute();
+
 		ExitApplication.getInstance().addActivity(this);
 	}
-	
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		new UpdateDataTask(sellerEmail).execute();
+	}
+
 	private void getSellerEmailFromIntent()
 	{
 		Intent intent=getIntent();
 		sellerEmail= intent.getStringExtra("seller_email");
 	}
+
+
+
+
+
+
+
+
 	
 	private void initialHeaderView()
 	{
@@ -130,6 +156,13 @@ public class SellerMessageActivity extends Activity
 			@Override
 			public void onClick(View v) {
 				SellerMessageActivity.this.finish();
+			}
+		});
+
+		ivTitleEdit.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
 			}
 		});
 	}

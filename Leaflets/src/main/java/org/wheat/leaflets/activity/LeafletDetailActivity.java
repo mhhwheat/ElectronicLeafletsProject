@@ -346,8 +346,8 @@ public class LeafletDetailActivity extends Activity implements OnScrollListener
 			data.setLeafletType(bundle.getString("leaflet_type"));
 			data.setCommentTimes(bundle.getInt("comment_times"));
 			data.setSellerLogoPath(bundle.getString("seller_logo_path"));
-			data.setLat(bundle.getDouble("lat"));
-			data.setLng(bundle.getDouble("lng"));
+			data.setSellerLat(bundle.getDouble("lat"));
+			data.setSellerLng(bundle.getDouble("lng"));
 			data.setDistance(bundle.getDouble("distance"));
 			data.setPraise(bundle.getInt("is_praise"));
 			data.setSellerAddress(bundle.getString("seller_address"));

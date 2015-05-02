@@ -30,6 +30,13 @@ public class RegisterSellerMsg
 
 	@SerializedName("seller_lng")
 	private double sellerLng;
+
+	@SerializedName("seller_address")
+	private String sellerAddress;
+
+	@SerializedName("seller_logo")
+	private String sellerLogo;
+
 	
 	public void setEmail(String email)
 	{
@@ -75,5 +82,21 @@ public class RegisterSellerMsg
 
 	public void setSellerLat(double sellerLat) {
 		this.sellerLat = sellerLat;
+	}
+
+	public String getSellerAddress() {
+		return sellerAddress;
+	}
+
+	public void setSellerAddress(String sellerAddress) {
+		this.sellerAddress = sellerAddress;
+	}
+
+	public String getSellerLogo() {
+		return sellerLogo;
+	}
+
+	public void setSellerLogo(String sellerLogo) {
+		this.sellerLogo = sellerLogo;
 	}
 }

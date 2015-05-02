@@ -76,7 +76,7 @@ public class BitmapTools {
 		        return bitmap;
 		}
 		
-		private static byte[] getBytes(InputStream is) throws IOException
+		public static byte[] getBytes(InputStream is) throws IOException
 		{
 			if(is==null)
 				return null;

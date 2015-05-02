@@ -112,5 +112,21 @@ public class UTCtoLocal
 		utcFormater.setTimeZone(TimeZone.getTimeZone("UTC"));
 		return utcFormater.format(new Date());
 	}
+
+	public static String local2UTC(String local,SimpleDateFormat format)
+	{
+		Date date=null;
+
+		try {
+			date = format.parse(local);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		if(date==null)
+			return "";
+
+		return localDate2UTC(date);
+	}
 	
 }
