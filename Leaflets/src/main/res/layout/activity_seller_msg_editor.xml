@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <FrameLayout
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp">
+
+        <ImageView
+            android:id="@+id/seller_msg_edit_logo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_collections_grey600_48dp"
+            android:background="@color/gainsboro"/>
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="bottom|right"
+            android:src="@drawable/get_photo"
+            android:background="@color/white"/>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/seller_msg_edit_label_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="店名"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"/>
+        <EditText
+            android:id="@+id/seller_msg_edit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:hint="喜洋洋"
+            android:paddingLeft="0dp"
+            android:background="#00000000"
+            android:singleLine="true"
+            android:layout_marginRight="10dp"
+            android:layout_toRightOf="@id/seller_msg_edit_label_name"/>
+
+        <org.wheat.leaflets.widget.DashedLine
+            android:id="@+id/seller_msg_dashline1"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/seller_msg_edit_label_name"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="联系电话"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/seller_msg_dashline1"/>
+        <EditText
+            android:id="@+id/seller_msg_edit_tel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="18825162410"
+            android:paddingLeft="0dp"
+            android:background="#00000000"
+            android:singleLine="true"
+            android:layout_marginRight="10dp"
+            android:layout_below="@id/seller_msg_dashline1"
+            android:layout_alignLeft="@id/seller_msg_edit_name"/>
+
+        <org.wheat.leaflets.widget.DashedLine
+            android:id="@+id/seller_msg_dashline2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/seller_msg_edit_tel"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邮箱"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/seller_msg_dashline2"/>
+        <EditText
+            android:id="@+id/seller_msg_edit_mail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="abc@qq.com"
+            android:paddingLeft="0dp"
+            android:background="#00000000"
+            android:singleLine="true"
+            android:layout_marginRight="10dp"
+            android:layout_below="@+id/seller_msg_dashline2"
+            android:layout_alignLeft="@id/seller_msg_edit_name"/>
+
+        <org.wheat.leaflets.widget.DashedLine
+            android:id="@+id/seller_msg_dashline3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/seller_msg_edit_mail"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+        <LinearLayout
+            android:id="@+id/seller_msg_edit_address_linear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@id/seller_msg_dashline3">
+            <EditText
+                android:id="@+id/seller_msg_edit_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="番禺区大学城西六路168号(近小谷围岛)"
+                android:layout_weight="15"/>
+
+            <ImageView
+                android:id="@+id/seller_msg_edit_location"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginLeft="5dp"
+                android:src="@drawable/ic_room_48px"/>
+        </LinearLayout>
+
+        <org.wheat.leaflets.widget.DashedLine
+            android:id="@+id/seller_msg_dashline4"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/seller_msg_edit_address_linear"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/seller_msg_edit_profile"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_below="@id/seller_msg_dashline4"
+            android:hint="简介"
+            android:gravity="top|left"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

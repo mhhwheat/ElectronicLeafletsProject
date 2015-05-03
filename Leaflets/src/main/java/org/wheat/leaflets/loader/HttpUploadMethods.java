@@ -128,6 +128,7 @@ public class HttpUploadMethods
 		fields.setUserName(userName);
 		fields.setLng(lng);
 		fields.setLat(lat);
+		fields.setUserType(userType);
 		CoordinatePostJson coordinatePost=new CoordinatePostJson();
 		coordinatePost.setData(fields);
 

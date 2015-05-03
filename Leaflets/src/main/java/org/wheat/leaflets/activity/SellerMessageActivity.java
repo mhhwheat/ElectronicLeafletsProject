@@ -8,6 +8,7 @@ import java.util.Map;
 import org.wheat.leaflets.R;
 import org.wheat.leaflets.basic.DateTools;
 import org.wheat.leaflets.basic.ExitApplication;
+import org.wheat.leaflets.data.UserLoginPreference;
 import org.wheat.leaflets.entity.ConstantValue;
 import org.wheat.leaflets.entity.LeafletsFields;
 import org.wheat.leaflets.entity.PhotoParameters;
@@ -24,6 +25,8 @@ import org.wheat.leaflets.widget.QuickReturnRelativeLayout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -39,6 +42,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /** 
  * description£∫
@@ -58,9 +62,10 @@ public class SellerMessageActivity extends Activity
 	
 	private LayoutInflater mInflater;
 	private DisplayMetrics metric;
+	private UserLoginPreference mPreference;
 	
-	private String userName="abc@qq.com";
-	private String sellerEmail="youcome@qq.com";
+	private String userName;
+	private String sellerEmail;
 	
 	private ListView mListView;
 	private SellerMsgJson sellerMsg;
@@ -69,6 +74,7 @@ public class SellerMessageActivity extends Activity
 	private ImageLoader mImageLoader;
 	
 	private ImageView ivTitleBack;
+	private TextView tvTitleText;
 	private ImageView ivTitleEdit;
 	
 	private View mHeaderView;
@@ -76,6 +82,7 @@ public class SellerMessageActivity extends Activity
 	private TextView tvSellerAddress;
 	private TextView tvSellerTel;
 	private TextView tvSellerEmail;
+	private ImageView ivSellerActionCall;
 
 	private QuickReturnRelativeLayout rlQuickReturnLayout;
 	private View mQuickReturnView;
@@ -101,17 +108,11 @@ public class SellerMessageActivity extends Activity
 		mListView.setAdapter(adapter);
 		
 		getSellerEmailFromIntent();
+		getLocalUserNameFromPreference();
 		initialHeaderView();
 		mListView.addHeaderView(mHeaderView);
-		
-		ivTitleBack=(ImageView)findViewById(R.id.seller_msg_title_back_img);
-		ivTitleEdit=(ImageView)findViewById(R.id.seller_msg_title_edit);
-		initialTitleBackListener();
-
-		rlQuickReturnLayout=(QuickReturnRelativeLayout)findViewById(R.id.seller_msg_quick_return_layout);
-		mQuickReturnView=mInflater.inflate(R.layout.activity_seller_msg_quick_return_view,null,false);
-		btAddLeaflet=(Button)mQuickReturnView.findViewById(R.id.seller_msg_add_leaflet);
-
+		initialTitle();
+		initialQuickReturnView();
 		
 		taskPool=new HashMap<String, ImageView>();
 
@@ -130,14 +131,48 @@ public class SellerMessageActivity extends Activity
 		sellerEmail= intent.getStringExtra("seller_email");
 	}
 
+	private void getLocalUserNameFromPreference()
+	{
+		mPreference=UserLoginPreference.getInstance(getApplicationContext());
+		switch (mPreference.getLoginState())
+		{
+			case UserLoginPreference.NO_USER_LOGIN:
+				this.userName="";
+				break;
+			case UserLoginPreference.USER_LOGIN:
+				this.userName=mPreference.getUserPreference().getUserEmail();
+				break;
+			case UserLoginPreference.SELLER_LOGIN:
+				this.userName=mPreference.getSellerPreference().getSellerEmail();
+				break;
+			default:
+				userName=null;
+				break;
+		}
+	}
 
+	private void initialQuickReturnView()
+	{
+		rlQuickReturnLayout=(QuickReturnRelativeLayout)findViewById(R.id.seller_msg_quick_return_layout);
+		mQuickReturnView=mInflater.inflate(R.layout.activity_seller_msg_quick_return_view,null,false);
+		btAddLeaflet=(Button)mQuickReturnView.findViewById(R.id.seller_msg_add_leaflet);
+		btAddLeaflet.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mPreference.getLoginState()==UserLoginPreference.SELLER_LOGIN&&userName!=null&&userName.equals(sellerEmail))
+				{
+					Intent intent=new Intent(SellerMessageActivity.this,CreateLeafletActivity.class);
+					startActivity(intent);
+				}
+			}
+		});
 
+		if(mPreference.getLoginState()==UserLoginPreference.SELLER_LOGIN&&userName!=null&&userName.equals(sellerEmail))
+		{
+			rlQuickReturnLayout.addQuickReturnView(mQuickReturnView);
+		}
+	}
 
-
-
-
-
-	
 	private void initialHeaderView()
 	{
 		mHeaderView=mInflater.inflate(R.layout.activity_seller_msg_header, mListView,false);
@@ -145,12 +180,26 @@ public class SellerMessageActivity extends Activity
 		tvSellerEmail=(TextView)mHeaderView.findViewById(R.id.seller_msg_mail);
 		tvSellerName=(TextView)mHeaderView.findViewById(R.id.seller_msg_seller_name);
 		tvSellerTel=(TextView)mHeaderView.findViewById(R.id.seller_msg_tel);
+		ivSellerActionCall=(ImageView)mHeaderView.findViewById(R.id.seller_msg_action_call);
+		ivSellerActionCall.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!tvSellerTel.getText().toString().trim().equals(""))
+				{
+					Intent intent=new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + tvSellerTel.getText().toString().trim()));
+					startActivity(intent);
+				}
+			}
+		});
 		
 		new GetSellerMsgTask().execute();
 	}
 	
-	private void initialTitleBackListener()
+	private void initialTitle()
 	{
+		ivTitleBack=(ImageView)findViewById(R.id.seller_msg_title_back_img);
+		ivTitleEdit=(ImageView)findViewById(R.id.seller_msg_title_edit);
+		tvTitleText=(TextView)findViewById(R.id.seller_msg_title_text);
 		ivTitleBack.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -165,6 +214,11 @@ public class SellerMessageActivity extends Activity
 
 			}
 		});
+
+		if(mPreference.getLoginState()==UserLoginPreference.SELLER_LOGIN&&userName!=null&&userName.equals(sellerEmail))
+		{
+			ivTitleEdit.setVisibility(View.GONE);
+		}
 	}
 	
 	private class SellerMsgListAdapter extends BaseAdapter
@@ -272,8 +326,9 @@ public class SellerMessageActivity extends Activity
 				if(!result.getData().getSellerName().equals(""))
 				{
 					tvSellerName.setText(result.getData().getSellerName());
+					tvTitleText.setText(result.getData().getSellerName());
 				}
-				
+
 				if(!result.getData().getPhoneNubmer().equals(""))
 				{
 					tvSellerTel.setText(result.getData().getPhoneNubmer());
@@ -282,11 +337,25 @@ public class SellerMessageActivity extends Activity
 				{
 					tvSellerTel.setText("Œ¥ÃÓ–¥");
 				}
-				
+
 				if(!result.getData().getEmail().equals(""))
+				{
+					tvSellerEmail.setText(result.getData().getEmail());
+				}
+				else
 				{
 					tvSellerEmail.setText("Œ¥ÃÓ–¥");
 				}
+
+				if(!result.getData().getSellerAddress().equals(""))
+				{
+					tvSellerAddress.setText(result.getData().getSellerAddress());
+				}
+				else
+				{
+					tvSellerAddress.setText("Œ¥ÃÓ–¥");
+				}
+
 			}
 				
 		}
@@ -341,6 +410,11 @@ public class SellerMessageActivity extends Activity
 
 		@Override
 		public void onClick(View v) {
+			if(mPreference.getLoginState()==UserLoginPreference.NO_USER_LOGIN)
+			{
+				Toast.makeText(SellerMessageActivity.this,"µ«¬Ω∫Û≤≈ƒ‹µ„‘ﬁ",Toast.LENGTH_LONG).show();
+				return;
+			}
 			leaflet=(ReturnData<LeafletsFields>)v.getTag();
 			if(leaflet.getDataFields().isPraise()==0)
 			{

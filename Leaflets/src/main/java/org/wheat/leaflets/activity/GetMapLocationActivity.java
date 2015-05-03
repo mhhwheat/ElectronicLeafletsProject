@@ -11,6 +11,7 @@ import org.wheat.leaflets.overlay.PopupPanel;
 
 /**
  * Created by Administrator on 2015/4/23.
+ *
  */
 public class GetMapLocationActivity extends MapActivity {
     private MapView mMapView;

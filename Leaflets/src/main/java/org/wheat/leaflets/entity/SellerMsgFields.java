@@ -23,7 +23,7 @@ public class SellerMsgFields
 	private String phoneNubmer;
 	
 	@SerializedName("seller_logo_name")
-	private String sellerLogoPaht;
+	private String sellerLogoPath;
 	
 	@SerializedName("seller_name")
 	private String sellerName;
@@ -46,6 +46,9 @@ public class SellerMsgFields
 	@SerializedName("seller_address")
 	private String sellerAddress;
 
+	@SerializedName("profile")
+	private String profile;
+
 	public String getUserName() {
 		return userName;
 	}
@@ -62,12 +65,12 @@ public class SellerMsgFields
 		this.phoneNubmer = phoneNubmer;
 	}
 
-	public String getSellerLogoPaht() {
-		return sellerLogoPaht;
+	public String getSellerLogoPath() {
+		return sellerLogoPath;
 	}
 
-	public void setSellerLogoPaht(String sellerLogoPaht) {
-		this.sellerLogoPaht = sellerLogoPaht;
+	public void setSellerLogoPath(String sellerLogoPath) {
+		this.sellerLogoPath = sellerLogoPath;
 	}
 
 	public String getSellerName() {
@@ -125,5 +128,12 @@ public class SellerMsgFields
 	public void setSellerAddress(String sellerAddress) {
 		this.sellerAddress = sellerAddress;
 	}
-	
+
+	public String getProfile() {
+		return profile;
+	}
+
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 }

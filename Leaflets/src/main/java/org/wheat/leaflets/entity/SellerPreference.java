@@ -27,6 +27,7 @@ public class SellerPreference implements Serializable
 	private double sellerLat;
 	private double sellerLng;
 	private String sellerAddress;
+	private String sellerProfile;//¼ò½é
 	
 	
 	
@@ -96,5 +97,13 @@ public class SellerPreference implements Serializable
 
 	public void setSellerAddress(String sellerAddress) {
 		this.sellerAddress = sellerAddress;
+	}
+
+	public String getProfile() {
+		return sellerProfile;
+	}
+
+	public void setProfile(String sellerProfile) {
+		this.sellerProfile = sellerProfile;
 	}
 }

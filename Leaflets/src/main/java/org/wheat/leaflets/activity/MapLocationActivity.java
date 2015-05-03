@@ -27,6 +27,8 @@ import org.wheat.leaflets.basic.ExitApplication;
 
 /**
  * Created by Administrator on 2015/4/24.
+ * 用户可以调用该activity在地图上标记一个坐标,不需要传入data
+ * 返回值：在intent中的键值对（lat,lng）
  */
 public class MapLocationActivity extends Activity implements AMap.OnMapLoadedListener,AMap.OnMapLongClickListener,AMapLocationListener
 {

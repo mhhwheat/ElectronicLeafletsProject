@@ -236,13 +236,16 @@ public class LoginActivity extends Activity
 			{
 				sharePreference.setLoginState(UserLoginPreference.SELLER_LOGIN);
 				SellerPreference preference=sharePreference.getSellerPreference();
-				preference.setSellerLogoPath(result.getData().getSellerLogoPaht());
+				preference.setSellerLogoPath(result.getData().getSellerLogoPath());
 				preference.setSellerName(result.getData().getSellerName());
 				preference.setSellerEmail(result.getData().getUserName());
 				preference.setLat(result.getData().getLat());
 				preference.setLng(result.getData().getLng());
 				preference.setSellerAddress(result.getData().getSellerAddress());
 				preference.setSellerPhoneNumber(result.getData().getPhoneNubmer());
+				preference.setProfile(result.getData().getProfile());
+				preference.setSellerLat(result.getData().getSellerLat());
+				preference.setSellerLng(result.getData().getSellerLng());
 				sharePreference.setSellerPreference(preference);
 
 				setResult(2,null);

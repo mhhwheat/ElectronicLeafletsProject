@@ -16,15 +16,16 @@
 
     <TextView
         android:id="@+id/seller_msg_title_text"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/seller_msg_title_back_img"
-        android:gravity="center"
+        android:gravity="left"
         android:singleLine="true"
         android:text="商家信息"
         android:textColor="@color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:ellipsize="end"/>
 
     <ImageView
         android:id="@+id/seller_msg_title_edit"

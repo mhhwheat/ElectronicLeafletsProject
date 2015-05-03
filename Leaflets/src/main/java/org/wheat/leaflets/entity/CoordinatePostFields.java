@@ -16,6 +16,9 @@ public class CoordinatePostFields
     @SerializedName("lng")
     private double lng;
 
+    @SerializedName("user_type")
+    private String userType;
+
     public String getUserName() {
         return userName;
     }
@@ -38,5 +41,13 @@ public class CoordinatePostFields
 
     public void setLng(double lng) {
         this.lng = lng;
+    }
+
+    public String getUserType() {
+        return userType;
+    }
+
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 }
